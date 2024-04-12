@@ -6,14 +6,18 @@ import multer from "multer";
 
 // Mostrar todos los registros
 export const getAllRecetas = async (req, res) => {
+    const perPage = 6 // Número de documentos por página
+    const page = req.query.page || 1; // Página actual (por defecto: página 1)
+
     try {
-        const recetas = await RecetaModel.find({});
+        const recetas = await RecetaModel.find({})
+            .skip((page - 1) * perPage)
+            .limit(perPage);
         res.json(recetas);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
-
 // Mostrar un registro por ID
 export const getReceta = async (req, res) => {
     try {
@@ -21,7 +25,7 @@ export const getReceta = async (req, res) => {
         if (!receta) {
             return res.status(404).json({ message: "La receta no existe" });
         }
-        res.json(receta);
+        res.status(200).json(receta);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
