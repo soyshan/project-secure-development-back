@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-
+import dotenv from 'dotenv';
+dotenv.config();
 // URL de conexión a MongoDB Atlas
-const db_mongo = 'mongodb+srv://Shanshan:dSlCreAzpF61riua@cluster0.i11gtdy.mongodb.net/recetas_database?retryWrites=true&w=majority';
-
+const db_mongo = process.env.DB_MONGO;
 
 // Conexión a la base de datos MongoDB Atlas
 mongoose.connect(db_mongo)

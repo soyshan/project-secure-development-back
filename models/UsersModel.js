@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import { Schema } from "mongoose";
 
 const userSchema = new Schema({
+    firstName: { type: String }, 
+    lastName: { type: String }, 
     username: { type: String },
     password: { type: String },
     email: { type: String },

@@ -12,9 +12,9 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { firstName, lastName, username, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10); // Aplicar hash a la contraseña
-        const newUser = await UsersModel.create({ username, email, password: hashedPassword }); // Guardar la contraseña hasheada
+        const newUser = await UsersModel.create({ firstName, lastName, username, email, password: hashedPassword }); // Guardar la contraseña hasheada
         return res.status(201).json(newUser);
     } catch (error) {
         return res.status(500).json({ error: 'Error al crear usuario' });
@@ -36,12 +36,14 @@ export const getUserById = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     const userId = req.params.id;
-    const { username, email } = req.body;
+    const { firstName, lastName, username, email } = req.body;
     try {
         const user = await UsersModel.findById(userId);
         if (!user) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
+        user.firstName = firstName;
+        user.lastName = lastName;
         user.username = username;
         user.email = email;
         await user.save();
