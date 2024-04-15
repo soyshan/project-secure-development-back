@@ -38,3 +38,32 @@ export const login = async (req, res) => {
         return res.status(500).json({ error: 'Error en el servidor' });
     }
 };
+
+export const register = async (req, res) => {
+    const { firstName, lastName, username, email, password } = req.body;
+    
+    try {
+        const existingEmail = await UsersModel.findOne({ email });
+
+        if(existingEmail){
+            return res.status(400).json({ message: "El correo electrónico ya está en uso" });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+
+        const user = new UsersModel({
+            firstName: firstName,
+            lastName:lastName,
+            username: username,
+            email: email,
+            password: hashPassword
+        });
+
+        await user.save();
+
+        res.status(200).json({ message: "Usuario creado exitosamente", user });
+    } catch (error) {
+        res.status(500).json({ message: "Algo salió mal en el servidor" });
+    }
+};

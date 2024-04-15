@@ -13,6 +13,6 @@ const userSchema = new Schema({
     updatedAt: { type: Date }
   });
   
-  const UsersModel = mongoose.model('User', userSchema);
+  const UsersModel = mongoose.model('usuarios', userSchema);
 
   export default UsersModel;

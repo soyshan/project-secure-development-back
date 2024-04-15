@@ -14,4 +14,5 @@ const recetaSchema = new Schema({
 // Definir el modelo de la colección de recetas
 const RecetaModel = mongoose.model('receta', recetaSchema);
 
+
 export default RecetaModel;
