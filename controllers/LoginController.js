@@ -4,6 +4,7 @@ import UsersModel from '../models/UsersModel.js';
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
+    
 
     try {
         // Buscar al usuario por su correo electrónico
