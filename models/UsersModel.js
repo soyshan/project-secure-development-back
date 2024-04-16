@@ -9,8 +9,8 @@ const userSchema = new Schema({
     password: { type: String },
     email: { type: String },
     role: { type: String },
-    createdAt: { type: Date },
-    updatedAt: { type: Date }
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
   });
   
   const UsersModel = mongoose.model('usuarios', userSchema);

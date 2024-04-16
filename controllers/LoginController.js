@@ -53,18 +53,19 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
 
-        const user = new UsersModel({
+        const newUser = new UsersModel({
             firstName: firstName,
-            lastName:lastName,
+            lastName: lastName,
             username: username,
             email: email,
-            password: hashPassword
+            password: hashPassword,
+            role: 'user' // Establecer el rol predeterminado como 'user'
         });
 
-        await user.save();
+        await newUser.save();
 
-        res.status(200).json({ message: "Usuario creado exitosamente", user });
+        res.status(200).json({ message: "Usuario creado exitosamente", user: newUser });
     } catch (error) {
-        res.status(500).json({ message: "Algo salió mal en el servidor" });
+        res.status(500).json({ message: "Algo salió mal en el servidor", error });
     }
 };

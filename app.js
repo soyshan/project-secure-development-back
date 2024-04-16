@@ -31,8 +31,6 @@ app.use('/auth', authRoutes);
 // Middleware de autenticación global
 // app.use(requireUserRole);
 
-
-
 app.use('/blogs', blogRoutes)
 app.use('/uploads',express.static('uploads'));
 
