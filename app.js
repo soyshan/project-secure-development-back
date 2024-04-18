@@ -8,6 +8,8 @@ import userRoutes from './routes/userRoutes.js'; // rutas de usuarios
 import authRoutes from './routes/authRoutes.js'; // rutas de autenticación
 // import { requireUserRole } from './middleware/authMiddleware.js'; //  middleware de autenticación del ROL solamente
 // import rateLimit from 'express-rate-limit'; // Importando express-rate-limit
+import contactRoutes from './routes/contactRoutes.js';
+
 
 const app = express()
 
@@ -27,6 +29,9 @@ app.use(express.json())
 
 // Rutas de autenticación
 app.use('/auth', authRoutes);
+
+// Rutas de contacto
+app.use('/', contactRoutes); // Utiliza las rutas de contacto
 
 // Middleware de autenticación global
 // app.use(requireUserRole);
