@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 // URL de conexión a MongoDB Atlas
 const db_mongo = process.env.DB_MONGO;
 
