@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors' 
+import dotenv from 'dotenv';
 //importamos la conexion a la base de datos
 import "./database/db.js"
 //importamos el enrutador
@@ -10,7 +11,7 @@ import authRoutes from './routes/authRoutes.js'; // rutas de autenticación
 // import rateLimit from 'express-rate-limit'; // Importando express-rate-limit
 import contactRoutes from './routes/contactRoutes.js';
 
-
+dotenv.config();
 const app = express()
 
 app.use(cors())
