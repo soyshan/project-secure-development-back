@@ -7,26 +7,24 @@ import "./database/db.js"
 import blogRoutes from './routes/routes.js'
 import userRoutes from './routes/userRoutes.js'; // rutas de usuarios
 import authRoutes from './routes/authRoutes.js'; // rutas de autenticación
-// import { requireUserRole } from './middleware/authMiddleware.js'; //  middleware de autenticación del ROL solamente
-// import rateLimit from 'express-rate-limit'; // Importando express-rate-limit
+// import { requireAuth } from './middleware/authMiddleware.js'; //  middleware de autenticación 
 import contactRoutes from './routes/contactRoutes.js';
+
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express()
+app.use(cookieParser());
 
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000', // Permitir solicitudes desde el puerto 3000
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Permitir todos los métodos HTTP
+    allowedHeaders: ['Content-Type', 'Authorization'], // Permitir ciertos encabezados
+    credentials: true, // Habilitar el soporte de credenciales CORS si es necesario
+  }));
+  
 app.use(express.json())
 
-// Configurar el middleware de express-rate-limit para evitar ataques de fuerza bruta
-// const limiter = rateLimit({
-//     windowMs: 15 * 60 * 1000, // 15 minutos
-//     max: 5, // Limitar a 5 solicitudes por ventana
-//     message: 'Demasiadas solicitudes desde esta IP, por favor inténtalo de nuevo más tarde.'
-//   });
-
-
-// Aplicando el middleware de express-rate-limit a la ruta de inicio de sesión
-// app.use('/auth/login', limiter);
 
 // Rutas de autenticación
 app.use('/auth', authRoutes);
@@ -35,7 +33,7 @@ app.use('/auth', authRoutes);
 app.use('/', contactRoutes); // Utiliza las rutas de contacto
 
 // Middleware de autenticación global
-// app.use(requireUserRole);
+// app.use(requireAuth);
 
 app.use('/blogs', blogRoutes)
 app.use('/uploads',express.static('uploads'));

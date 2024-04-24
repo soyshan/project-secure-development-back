@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
 };
 
 export const getUserById = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     try {
         const user = await UsersModel.findById(userId);
         if (!user) {
@@ -35,7 +35,7 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     const { firstName, lastName, username, email } = req.body;
     try {
         const user = await UsersModel.findById(userId);
@@ -54,14 +54,13 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     try {
-        const user = await UsersModel.findById(userId);
-        if (!user) {
+        const deletedUser = await UsersModel.findByIdAndDelete(userId);
+        if (!deletedUser) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-        await user.remove();
-        return res.status(204).send();
+        return res.status(204).json({ message: 'Usuario eliminado correctamente' });
     } catch (error) {
         return res.status(500).json({ error: 'Error al eliminar usuario' });
     }

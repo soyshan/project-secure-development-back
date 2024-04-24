@@ -1,24 +1,24 @@
 import express from 'express'
-//usamos el enrutador que nos ofrece el express
+import { requireAuth } from '../middleware/authMiddleware.js';
 import {createReceta, getAllRecetas, getReceta, updateReceta, deleteReceta} from '../controllers/BlogController.js'
 const router = express.Router()
 
 //traer o mostrar todos los blogs
 //ruta raiz '/' y el metodo:getAllBlogs
 
-router.get('/',getAllRecetas)
+router.get('/', getAllRecetas)
 
 //metodo para mostrar un solo Receta
 router.get('/:id', getReceta)
 
 //para crear
-router.post('/',createReceta)
+router.post('/',requireAuth,createReceta)
 
 //para actualizar
-router.put('/:id',updateReceta)
+router.put('/:id',requireAuth,updateReceta)
 
 //para eliminar
-router.delete('/:id',deleteReceta)
+router.delete('/:id',requireAuth,deleteReceta)
 
 
 export default router
