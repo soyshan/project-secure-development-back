@@ -17,7 +17,7 @@ const app = express()
 app.use(cookieParser());
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://project-secure-development-back.onrender.com', 'https://project-secure-development-front.onrender.com'], // Permitir solicitudes desde el puerto 3000
+    origin: ['http://localhost:3000', 'https://project-secure-development-back.onrender.com', 'https://project-secure-development-front.onrender.com'], // Direcciones permitidas
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Permitir todos los métodos HTTP
     allowedHeaders: ['Content-Type', 'Authorization'], // Permitir ciertos encabezados
     credentials: true, // Habilitar el soporte de credenciales CORS si es necesario
