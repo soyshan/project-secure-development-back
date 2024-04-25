@@ -1,9 +1,7 @@
 import express from "express";
 import cors from 'cors' 
 import dotenv from 'dotenv';
-//importamos la conexion a la base de datos
 import "./database/db.js"
-//importamos el enrutador
 import blogRoutes from './routes/routes.js'
 import userRoutes from './routes/userRoutes.js'; // rutas de usuarios
 import authRoutes from './routes/authRoutes.js'; // rutas de autenticación

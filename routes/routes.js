@@ -2,8 +2,7 @@ import express from 'express'
 import {createReceta, getAllRecetas, getReceta, updateReceta, deleteReceta} from '../controllers/BlogController.js'
 const router = express.Router()
 
-//traer o mostrar todos los blogs
-//ruta raiz '/' y el metodo:getAllBlogs
+
 
 router.get('/', getAllRecetas)
 
