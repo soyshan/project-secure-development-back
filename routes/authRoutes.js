@@ -2,14 +2,12 @@
 
 import express from 'express';
 import { login, logout, register, profile } from '../controllers/LoginController.js';
-
-
-// import { authRequired2 } from '../middleware/validateToken.js';
+import { limitLogin } from '../middleware/limiter.js';
 
 const router = express.Router();
 
 // Rutas de autenticación
-router.post('/login',login ); // Ruta para iniciar sesión
+router.post('/login', limitLogin,login ); // Ruta para iniciar sesión
 
 router.post ('/logout',logout);
 

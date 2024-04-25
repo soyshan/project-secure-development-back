@@ -1,5 +1,4 @@
 import express from 'express'
-import { requireAuth } from '../middleware/authMiddleware.js';
 import {createReceta, getAllRecetas, getReceta, updateReceta, deleteReceta} from '../controllers/BlogController.js'
 const router = express.Router()
 
@@ -12,13 +11,13 @@ router.get('/', getAllRecetas)
 router.get('/:id', getReceta)
 
 //para crear
-router.post('/',requireAuth,createReceta)
+router.post('/',createReceta)
 
 //para actualizar
-router.put('/:id',requireAuth,updateReceta)
+router.put('/:id',updateReceta)
 
 //para eliminar
-router.delete('/:id',requireAuth,deleteReceta)
+router.delete('/:id',deleteReceta)
 
 
 export default router
