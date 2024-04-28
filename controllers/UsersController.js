@@ -3,7 +3,7 @@ import UsersModel from '../models/UsersModel.js';
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await UsersModel.findAll();
+        const users = await UsersModel.find();
         return res.json(users);
     } catch (error) {
         return res.status(500).json({ error: 'Error al obtener usuarios' });
@@ -12,9 +12,9 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await UsersModel.create({ username, email, password: hashedPassword });
+        const { firstName, lastName, username, email, password } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10); // Aplicar hash a la contraseña
+        const newUser = await UsersModel.create({ firstName, lastName, username, email, password: hashedPassword }); // Guardar la contraseña hasheada
         return res.status(201).json(newUser);
     } catch (error) {
         return res.status(500).json({ error: 'Error al crear usuario' });
@@ -22,9 +22,9 @@ export const createUser = async (req, res) => {
 };
 
 export const getUserById = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     try {
-        const user = await UsersModel.findByPk(userId);
+        const user = await UsersModel.findById(userId);
         if (!user) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
@@ -35,13 +35,15 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-    const userId = req.params.id;
-    const { username, email } = req.body;
+    const userId = req.params.userId;
+    const { firstName, lastName, username, email } = req.body;
     try {
-        const user = await UsersModel.findByPk(userId);
+        const user = await UsersModel.findById(userId);
         if (!user) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
+        user.firstName = firstName;
+        user.lastName = lastName;
         user.username = username;
         user.email = email;
         await user.save();
@@ -52,14 +54,13 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     try {
-        const user = await UsersModel.findByPk(userId);
-        if (!user) {
+        const deletedUser = await UsersModel.findByIdAndDelete(userId);
+        if (!deletedUser) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-        await user.destroy();
-        return res.status(204).send();
+        return res.status(204).json({ message: 'Usuario eliminado correctamente' });
     } catch (error) {
         return res.status(500).json({ error: 'Error al eliminar usuario' });
     }

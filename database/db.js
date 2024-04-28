@@ -1,10 +1,14 @@
-import {Sequelize} from 'sequelize'
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
+// URL de conexión a MongoDB Atlas
+const db_mongo = process.env.DB_MONGO;
 
-const db = new Sequelize('recetas_database','root','Misql123123.',{
-   host:'localhost',
-   dialect:'mysql'
-});
-
-export default db
-
-//  conexion a la base de datos
+// Conexión a la base de datos MongoDB Atlas
+mongoose.connect(db_mongo)
+  .then(() => {
+    console.log('Conexión exitosa a MongoDB Atlas');
+  })
+  .catch((error) => {
+    console.error('Error de conexión a MongoDB Atlas:', error);
+  });
