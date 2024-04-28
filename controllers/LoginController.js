@@ -30,7 +30,7 @@ export const login = async (req, res) => {
                 email: user.email,
                 name: user.firstName,
                 role: user.role,
-                expiresIn: '1h' // Establecer la fecha de expiración del token (por ejemplo, 1 hora)
+                expiresIn: '1h' // fecha de expiración del token 
             },
             process.env.JWT_SECRET // Utilizar una clave secreta para firmar el token
         );
@@ -40,9 +40,7 @@ export const login = async (req, res) => {
             expires: new Date(Date.now() + 1000 * 60 * 60) // Expira en 1 hora
         });
 
-    
 
-        
         // Enviar el token JWT en la respuesta
         return res.status(200).json({ token,
             userId: user._id,
